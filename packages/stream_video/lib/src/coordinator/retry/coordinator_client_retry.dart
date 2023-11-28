@@ -230,6 +230,7 @@ class CoordinatorClientRetry extends CoordinatorClient {
     String? datacenterId,
     bool? ringing,
     bool? create,
+    String? migratingFrom,
   }) {
     return _retryManager.execute(
       () => _delegate.joinCall(
@@ -237,6 +238,7 @@ class CoordinatorClientRetry extends CoordinatorClient {
         datacenterId: datacenterId,
         ringing: ringing,
         create: create,
+        migratingFrom: migratingFrom,
       ),
       (error, nextAttemptDelay) async {
         _logRetry('joinCall', error, nextAttemptDelay);
