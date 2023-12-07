@@ -2,10 +2,8 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:stream_video/stream_video.dart';
 
-import '../../theme/stream_video_theme.dart';
+import '../../../stream_video_flutter.dart';
 
 /// Renders a call background that shows either a static image or user images
 /// based on the call state.
@@ -33,7 +31,7 @@ class CallBackground extends StatelessWidget {
             imageUrl: participants.first.image,
           )
         else
-          _DefaultCallBackground(),
+          const CustomOutgoingBackground(),
         child ?? const SizedBox(),
       ],
     );
@@ -77,20 +75,33 @@ class _ParticipantImageBackground extends StatelessWidget {
         ],
       );
     } else {
-      return _DefaultCallBackground();
+      return const CustomOutgoingBackground();
     }
   }
 }
 
-class _DefaultCallBackground extends StatelessWidget {
+// class _DefaultCallBackground extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return FittedBox(
+//       fit: BoxFit.fill,
+//       child: Image.asset(
+//         'images/call_background.jpg',
+//         package: 'stream_video_flutter',
+//       ),
+//     );
+//   }
+// }
+
+class CustomOutgoingBackground extends StatelessWidget {
+  const CustomOutgoingBackground({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      fit: BoxFit.fill,
-      child: Image.asset(
-        'images/call_background.jpg',
-        package: 'stream_video_flutter',
-      ),
+    // final theme = StreamVideoTheme.of(context);
+
+    return Container(
+      color: Colors.black,
     );
   }
 }
