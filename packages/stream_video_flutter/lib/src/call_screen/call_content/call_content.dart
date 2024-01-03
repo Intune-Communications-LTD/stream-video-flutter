@@ -47,7 +47,13 @@ class StreamCallContent extends StatefulWidget {
     this.overlayAppBarBuilder,
     this.callParticipantsBuilder,
     this.callControlsBuilder,
+    this.extendBody = false,
+    this.extendBodyBehindAppBar = false,
   });
+
+  final bool extendBody;
+
+  final bool extendBodyBehindAppBar;
 
   /// Represents a call.
   final Call call;
@@ -125,6 +131,8 @@ class _StreamCallContentState extends State<StreamCallContent> {
 
     return Scaffold(
       backgroundColor: theme.callContentTheme.callContentBackgroundColor,
+      extendBody: widget.extendBody,
+      extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
       appBar: widget.callAppBarBuilder?.call(context, call, callState) ??
           CallAppBar(
             call: call,
