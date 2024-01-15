@@ -244,6 +244,8 @@ extension SfuTrackTypeExtension on sfu_models.TrackType {
         return SfuTrackType.screenShareAudio;
       case sfu_models.TrackType.TRACK_TYPE_UNSPECIFIED:
         return SfuTrackType.unspecified;
+      case sfu_models.TrackType.TRACK_TYPE_SCREEN_SHARE_DEVICE:
+        return SfuTrackType.screenShareDevice;
       default:
         throw StateError('unexpected track type: $this');
     }

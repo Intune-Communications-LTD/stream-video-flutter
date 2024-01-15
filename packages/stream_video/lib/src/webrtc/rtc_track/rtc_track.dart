@@ -34,7 +34,8 @@ abstract class RtcTrack {
 
   bool get isVideoTrack {
     return trackType == SfuTrackType.video ||
-        trackType == SfuTrackType.screenShare;
+        trackType == SfuTrackType.screenShare ||
+        trackType == SfuTrackType.screenShareDevice;
   }
 
   bool get isAudioTrack =>

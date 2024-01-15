@@ -155,6 +155,10 @@ class CallParticipantState
     return publishedTracks[SfuTrackType.screenShare];
   }
 
+  TrackState? get screenShareDeviceTrack {
+    return publishedTracks[SfuTrackType.screenShareDevice];
+  }
+
   bool get isAudioEnabled {
     return !(audioTrack?.muted ?? true);
   }
@@ -164,6 +168,7 @@ class CallParticipantState
   }
 
   bool get isScreenShareEnabled {
-    return !(screenShareTrack?.muted ?? true);
+    return !(screenShareTrack?.muted ?? true) ||
+        !(screenShareDeviceTrack?.muted ?? true);
   }
 }

@@ -97,7 +97,9 @@ class RtcLocalTrack<T extends MediaConstraints> extends RtcTrack {
 
     final track = RtcLocalTrack(
       trackIdPrefix: trackIdPrefix,
-      trackType: SfuTrackType.screenShare,
+      trackType: constraints.useiOSBroadcastExtension
+          ? SfuTrackType.screenShareDevice
+          : SfuTrackType.screenShare,
       mediaStream: stream,
       mediaTrack: videoTrack,
       mediaConstraints: constraints,

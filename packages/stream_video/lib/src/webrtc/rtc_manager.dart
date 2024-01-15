@@ -407,7 +407,8 @@ extension PublisherRtcManager on RtcManager {
 
     final encodings = codecs.computeVideoEncodings(
       dimension: dimension,
-      isScreenShare: track.trackType == SfuTrackType.screenShare,
+      isScreenShare: track.trackType == SfuTrackType.screenShare ||
+          track.trackType == SfuTrackType.screenShareDevice,
     );
 
     for (final encoding in encodings) {
@@ -698,11 +699,20 @@ extension RtcManagerTrackHelper on RtcManager {
     bool enabled = true,
     ScreenShareConstraints? constraints,
   }) {
-    return _setTrackEnabled(
-      trackType: SfuTrackType.screenShare,
-      enabled: enabled,
-      constraints: constraints,
-    );
+    if (CurrentPlatform.isIos &&
+        (constraints?.useiOSBroadcastExtension ?? false)) {
+      return _setTrackEnabled(
+        trackType: SfuTrackType.screenShareDevice,
+        enabled: enabled,
+        constraints: constraints,
+      );
+    } else {
+      return _setTrackEnabled(
+        trackType: SfuTrackType.screenShare,
+        enabled: enabled,
+        constraints: constraints,
+      );
+    }
   }
 
   Future<Result<RtcLocalTrack>> _setTrackEnabled({
@@ -742,7 +752,8 @@ extension RtcManagerTrackHelper on RtcManager {
       await muteTrack(trackId: track.trackId);
 
       // If the track is a screen share track, mute the audio track as well.
-      if (track.trackType == SfuTrackType.screenShare) {
+      if (track.trackType == SfuTrackType.screenShare ||
+          track.trackType == SfuTrackType.screenShareDevice) {
         final screenShareAudioTrack = getPublisherTrackByType(
           SfuTrackType.screenShareAudio,
         );
@@ -754,7 +765,8 @@ extension RtcManagerTrackHelper on RtcManager {
       await unmuteTrack(trackId: track.trackId);
 
       // If the track is a screen share track, unmute the audio track as well.
-      if (track.trackType == SfuTrackType.screenShare) {
+      if (track.trackType == SfuTrackType.screenShare ||
+          track.trackType == SfuTrackType.screenShareDevice) {
         final screenShareAudioTrack = getPublisherTrackByType(
           SfuTrackType.screenShareAudio,
         );
@@ -803,7 +815,8 @@ extension RtcManagerTrackHelper on RtcManager {
         success: (it) => publishAudioTrack(track: it.data),
         failure: (it) => it,
       );
-    } else if (trackType == SfuTrackType.screenShare) {
+    } else if (trackType == SfuTrackType.screenShare ||
+        trackType == SfuTrackType.screenShareDevice) {
       if (constraints != null && constraints is! ScreenShareConstraints) {
         final errorMessage =
             'Invalid media constraints type ${constraints.runtimeType}, $ScreenShareConstraints expected';

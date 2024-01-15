@@ -104,11 +104,15 @@ class StreamCallParticipants extends StatelessWidget {
     final screenShareParticipant = participants.firstWhereOrNull(
       (it) {
         final screenShareTrack = it.screenShareTrack;
+        final screenShareDeviceTrack = it.screenShareDeviceTrack;
         final isScreenShareEnabled = it.isScreenShareEnabled;
 
         // If the screen share track is local, we don't have to subscribe to
         // anything and we can directly use the mute state.
-        if (screenShareTrack is! RemoteTrackState) return isScreenShareEnabled;
+        if (screenShareTrack is! RemoteTrackState ||
+            screenShareDeviceTrack is! RemoteTrackState) {
+          return isScreenShareEnabled;
+        }
 
         // If the screen share track is remote and already subscribed and
         // received, we can directly use the mute state.

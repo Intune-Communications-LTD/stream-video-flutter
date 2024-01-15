@@ -26,6 +26,8 @@ extension SfuTrackTypeMapper on SfuTrackType {
       return sfu_models.TrackType.TRACK_TYPE_VIDEO;
     } else if (this == SfuTrackType.screenShare) {
       return sfu_models.TrackType.TRACK_TYPE_SCREEN_SHARE;
+    } else if (this == SfuTrackType.screenShareDevice) {
+      return sfu_models.TrackType.TRACK_TYPE_SCREEN_SHARE_DEVICE;
     } else if (this == SfuTrackType.screenShareAudio) {
       return sfu_models.TrackType.TRACK_TYPE_SCREEN_SHARE_AUDIO;
     } else {

@@ -68,6 +68,7 @@ class TrackType extends $pb.ProtobufEnum {
   static const TrackType TRACK_TYPE_VIDEO = TrackType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TRACK_TYPE_VIDEO');
   static const TrackType TRACK_TYPE_SCREEN_SHARE = TrackType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TRACK_TYPE_SCREEN_SHARE');
   static const TrackType TRACK_TYPE_SCREEN_SHARE_AUDIO = TrackType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TRACK_TYPE_SCREEN_SHARE_AUDIO');
+  static const TrackType TRACK_TYPE_SCREEN_SHARE_DEVICE = TrackType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TRACK_TYPE_SCREEN_SHARE_DEVICE');
 
   static const $core.List<TrackType> values = <TrackType> [
     TRACK_TYPE_UNSPECIFIED,
@@ -75,6 +76,7 @@ class TrackType extends $pb.ProtobufEnum {
     TRACK_TYPE_VIDEO,
     TRACK_TYPE_SCREEN_SHARE,
     TRACK_TYPE_SCREEN_SHARE_AUDIO,
+    TRACK_TYPE_SCREEN_SHARE_DEVICE,
   ];
 
   static final $core.Map<$core.int, TrackType> _byValue = $pb.ProtobufEnum.initByValue(values);

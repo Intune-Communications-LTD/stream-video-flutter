@@ -129,6 +129,7 @@ class ScreenShareContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = StreamVideoTheme.of(context);
     final screenShareTrack = participant.screenShareTrack;
+    final screenShareDeviceTrack = participant.screenShareDeviceTrack;
 
     return ClipRRect(
       borderRadius: borderRadius,
@@ -149,7 +150,9 @@ class ScreenShareContent extends StatelessWidget {
                 call: call,
                 participant: participant,
                 videoFit: VideoFit.contain,
-                videoTrackType: SfuTrackType.screenShare,
+                videoTrackType: !(screenShareDeviceTrack?.muted ?? true)
+                    ? SfuTrackType.screenShareDevice
+                    : SfuTrackType.screenShare,
               ),
             );
           },

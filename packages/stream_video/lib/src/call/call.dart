@@ -1327,9 +1327,16 @@ class Call {
         Result.error('Session is null');
 
     if (result.isSuccess) {
-      _stateManager.participantSetScreenShareEnabled(
-        SetScreenShareEnabled(enabled: enabled),
-      );
+      if (CurrentPlatform.isIos &&
+          (constraints?.useiOSBroadcastExtension ?? false)) {
+        _stateManager.participantSetScreenShareDeviceEnabled(
+          SetScreenShareEnabled(enabled: enabled),
+        );
+      } else {
+        _stateManager.participantSetScreenShareEnabled(
+          SetScreenShareEnabled(enabled: enabled),
+        );
+      }
       _connectOptions = _connectOptions.copyWith(
         screenShare: enabled ? TrackOption.enabled() : TrackOption.disabled(),
       );
@@ -1670,6 +1677,7 @@ enum TrackType {
   audio,
   video,
   screenshare,
+  screenShareDevice,
   all;
 
   @override
@@ -1685,6 +1693,8 @@ enum TrackType {
         return SfuTrackType.video;
       case TrackType.screenshare:
         return SfuTrackType.screenShare;
+      case TrackType.screenShareDevice:
+        return SfuTrackType.screenShareDevice;
       //ignore:no_default_cases
       default:
         throw Exception('Unknown mute type: $this');

@@ -12,6 +12,8 @@ class SfuTrackType {
 
   static SfuTrackTypeVideo get screenShare => _ScreenShare();
 
+  static SfuTrackTypeVideo get screenShareDevice => _ScreenShareDevice();
+
   static SfuTrackTypeAudio get screenShareAudio => _ScreenShareAudio();
 
   bool get isAudio => this is SfuTrackTypeAudio;
@@ -84,6 +86,21 @@ class _ScreenShare extends SfuTrackTypeVideo {
   @override
   String toString() {
     return 'screenShare';
+  }
+}
+
+class _ScreenShareDevice extends SfuTrackTypeVideo {
+  factory _ScreenShareDevice() {
+    return _instance;
+  }
+
+  const _ScreenShareDevice._internal();
+
+  static const _ScreenShareDevice _instance = _ScreenShareDevice._internal();
+
+  @override
+  String toString() {
+    return 'screenShareDevice';
   }
 }
 

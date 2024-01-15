@@ -631,7 +631,11 @@ class CallSession extends Disposable {
     _logger.d(() => '[setSubscriptions] actions: $actions');
 
     final participants = stateManager.callState.callParticipants;
-    final exclude = {SfuTrackType.video, SfuTrackType.screenShare};
+    final exclude = {
+      SfuTrackType.video,
+      SfuTrackType.screenShare,
+      SfuTrackType.screenShareDevice,
+    };
     final subscriptions = <String, SfuSubscriptionDetails>{
       ...participants.getSubscriptions(exclude: exclude),
     };

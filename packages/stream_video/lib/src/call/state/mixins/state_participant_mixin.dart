@@ -267,6 +267,12 @@ mixin StateParticipantMixin on StateNotifier<CallState> {
   ) {
     return _toggleTrackType(SfuTrackType.screenShare, action.enabled);
   }
+  
+   void participantSetScreenShareDeviceEnabled(
+    SetScreenShareEnabled action,
+  ) {
+    return _toggleTrackType(SfuTrackType.screenShareDevice, action.enabled);
+  }
 
   void _toggleTrackType(
     SfuTrackType trackType,

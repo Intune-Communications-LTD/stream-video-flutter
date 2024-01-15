@@ -10,6 +10,9 @@ mixin SfuTrackTypeParser {
     } else if (name == sfu_models.TrackType.TRACK_TYPE_SCREEN_SHARE.name) {
       return SfuTrackType.screenShare;
     } else if (name ==
+        sfu_models.TrackType.TRACK_TYPE_SCREEN_SHARE_DEVICE.name) {
+      return SfuTrackType.screenShareDevice;
+    } else if (name ==
         sfu_models.TrackType.TRACK_TYPE_SCREEN_SHARE_AUDIO.name) {
       return SfuTrackType.screenShareAudio;
     }
@@ -23,6 +26,8 @@ mixin SfuTrackTypeParser {
       return SfuTrackType.video;
     } else if (name == 'screen') {
       return SfuTrackType.screenShare;
+    } else if (name == 'screenDevice') {
+      return SfuTrackType.screenShareDevice;
     }
     return SfuTrackType.unspecified;
   }
