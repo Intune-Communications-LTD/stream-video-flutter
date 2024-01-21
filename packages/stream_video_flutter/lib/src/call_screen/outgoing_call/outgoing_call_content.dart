@@ -10,6 +10,7 @@ import 'outgoing_call_controls.dart';
 typedef OutgoingCallBackground = Widget Function(
   Call call,
   CallState callState,
+  List<UserInfo> participants,
   Widget child,
 );
 
@@ -153,6 +154,7 @@ class _StreamOutgoingCallContentState extends State<StreamOutgoingCallContent> {
     return widget.backgroundWidget?.call(
           widget.call,
           widget.callState,
+          participants,
           child,
         ) ??
         CallBackground(
