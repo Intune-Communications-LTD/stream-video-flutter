@@ -209,7 +209,7 @@ class _SnappingFloatingViewState extends State<SnappingFloatingView>
     double containerHeight,
   ) {
     final left = floatingViewPadding;
-    final top = floatingViewPadding;
+    final top = floatingViewPadding + kToolbarHeight;
     final right = containerWidth - floatingViewWidth - floatingViewPadding;
     final bottom = containerHeight - floatingViewHeight - floatingViewPadding;
 

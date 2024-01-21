@@ -87,6 +87,7 @@ class RegularCallParticipantsContent extends StatelessWidget {
       call: call,
       participants: gridParticipants,
       itemBuilder: callParticipantBuilder,
+      padding: const EdgeInsets.all(1),
     );
 
     if (showLocalVideo) {

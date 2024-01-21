@@ -38,9 +38,9 @@ class StreamVideoTheme extends ThemeExtension<StreamVideoTheme> {
     );
 
     final customizedTheme = defaultTheme.copyWith(
+      callContentTheme: callContentTheme,
       textTheme: textTheme,
       colorTheme: colorTheme,
-      callContentTheme: callContentTheme,
       callControlsTheme: callControlsTheme,
       userAvatarTheme: userAvatarTheme,
       lobbyViewTheme: lobbyViewTheme,
@@ -283,6 +283,7 @@ class StreamVideoTheme extends ThemeExtension<StreamVideoTheme> {
       ),
       callContentTheme: const StreamCallContentThemeData(
         callContentBackgroundColor: Color(0XFF272A30),
+        appBarCenterTitle: false,
       ),
       outgoingCallTheme: StreamIncomingOutgoingCallThemeData(
         singleParticipantAvatarTheme: StreamUserAvatarThemeData(
