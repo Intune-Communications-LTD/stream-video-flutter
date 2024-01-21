@@ -7,6 +7,12 @@ import '../common/calling_participants.dart';
 import '../common/participant_avatars.dart';
 import 'outgoing_call_controls.dart';
 
+typedef OutgoingCallBackground = Widget Function(
+  Call call,
+  CallState callState,
+  Widget child,
+);
+
 /// Represents the Outgoing Call state and UI, when the user is calling
 /// other people.
 class StreamOutgoingCallContent extends StatefulWidget {
@@ -64,10 +70,10 @@ class StreamOutgoingCallContent extends StatefulWidget {
   /// Builder used to create a custom widget for participants display names.
   final ParticipantsDisplayNameBuilder? participantsDisplayNameBuilder;
 
-  /// Should be a stack as a background for the call content.
-  final Widget Function(
-    Widget child,
-  )? backgroundWidget;
+  /// A widget that is placed behind the outgoing call UI instead of the default
+  ///
+  /// background. Preferably use a [Stack] widget, like in the default [CallBackground].
+  final OutgoingCallBackground? backgroundWidget;
 
   @override
   State<StreamOutgoingCallContent> createState() =>
@@ -145,6 +151,8 @@ class _StreamOutgoingCallContentState extends State<StreamOutgoingCallContent> {
     );
 
     return widget.backgroundWidget?.call(
+          widget.call,
+          widget.callState,
           child,
         ) ??
         CallBackground(
