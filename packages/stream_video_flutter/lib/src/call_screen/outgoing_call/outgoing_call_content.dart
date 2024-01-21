@@ -7,6 +7,13 @@ import '../common/calling_participants.dart';
 import '../common/participant_avatars.dart';
 import 'outgoing_call_controls.dart';
 
+typedef OutgoingCallBackground = Widget Function(
+  Call call,
+  CallState callState,
+  List<UserInfo> participants,
+  Widget child,
+);
+
 /// Represents the Outgoing Call state and UI, when the user is calling
 /// other people.
 class StreamOutgoingCallContent extends StatefulWidget {
@@ -15,6 +22,7 @@ class StreamOutgoingCallContent extends StatefulWidget {
     super.key,
     required this.call,
     required this.callState,
+    this.backgroundWidget,
     this.onCancelCallTap,
     this.onMicrophoneTap,
     this.onCameraTap,
@@ -63,6 +71,11 @@ class StreamOutgoingCallContent extends StatefulWidget {
   /// Builder used to create a custom widget for participants display names.
   final ParticipantsDisplayNameBuilder? participantsDisplayNameBuilder;
 
+  /// A widget that is placed behind the outgoing call UI instead of the default
+  ///
+  /// background. Preferably use a [Stack] widget, like in the default [CallBackground].
+  final OutgoingCallBackground? backgroundWidget;
+
   @override
   State<StreamOutgoingCallContent> createState() =>
       _StreamOutgoingCallContentState();
@@ -90,57 +103,64 @@ class _StreamOutgoingCallContentState extends State<StreamOutgoingCallContent> {
     final participants =
         widget.callState.otherParticipants.map((e) => e.toUserInfo()).toList();
 
-    return CallBackground(
-      participants: participants,
-      child: Material(
-        color: Colors.transparent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            widget.participantsAvatarBuilder?.call(
-                  context,
-                  widget.call,
-                  widget.callState,
-                  participants,
-                ) ??
-                ParticipantAvatars(
+    final child = Material(
+      color: Colors.transparent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Spacer(),
+          widget.participantsAvatarBuilder?.call(
+                context,
+                widget.call,
+                widget.callState,
+                participants,
+              ) ??
+              ParticipantAvatars(
+                participants: participants,
+                singleParticipantAvatarTheme: singleParticipantAvatarTheme,
+                multipleParticipantAvatarTheme: multipleParticipantAvatarTheme,
+              ),
+          widget.participantsDisplayNameBuilder?.call(
+                context,
+                widget.call,
+                widget.callState,
+                participants,
+              ) ??
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 64, vertical: 32),
+                child: CallingParticipants(
                   participants: participants,
-                  singleParticipantAvatarTheme: singleParticipantAvatarTheme,
-                  multipleParticipantAvatarTheme:
-                      multipleParticipantAvatarTheme,
+                  singleParticipantTextStyle: singleParticipantTextStyle,
+                  multipleParticipantTextStyle: multipleParticipantTextStyle,
                 ),
-            widget.participantsDisplayNameBuilder?.call(
-                  context,
-                  widget.call,
-                  widget.callState,
-                  participants,
-                ) ??
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 64, vertical: 32),
-                  child: CallingParticipants(
-                    participants: participants,
-                    singleParticipantTextStyle: singleParticipantTextStyle,
-                    multipleParticipantTextStyle: multipleParticipantTextStyle,
-                  ),
-                ),
-            Text(
-              'Calling…',
-              style: callingLabelTextStyle,
-            ),
-            const Spacer(),
-            OutgoingCallControls(
-              isMicrophoneEnabled: connectOptions.microphone.isEnabled,
-              isCameraEnabled: connectOptions.camera.isEnabled,
-              onCancelCallTap: () => _onCancelCallTap(context),
-              onMicrophoneTap: () => _onMicrophoneTap(context),
-              onCameraTap: () => _onCameraTap(context),
-            ),
-          ],
-        ),
+              ),
+          Text(
+            'Calling…',
+            style: callingLabelTextStyle,
+          ),
+          const Spacer(),
+          OutgoingCallControls(
+            isMicrophoneEnabled: connectOptions.microphone.isEnabled,
+            isCameraEnabled: connectOptions.camera.isEnabled,
+            onCancelCallTap: () => _onCancelCallTap(context),
+            onMicrophoneTap: () => _onMicrophoneTap(context),
+            onCameraTap: () => _onCameraTap(context),
+          ),
+        ],
       ),
     );
+
+    return widget.backgroundWidget?.call(
+          widget.call,
+          widget.callState,
+          participants,
+          child,
+        ) ??
+        CallBackground(
+          participants: participants,
+          child: child,
+        );
   }
 
   Future<void> _onCancelCallTap(BuildContext context) async {
